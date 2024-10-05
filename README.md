@@ -25,3 +25,15 @@ A transformer but with all euclidean distance throughout
     url     = {https://api.semanticscholar.org/CorpusID:219530837}
 }
 ```
+
+```bibtex
+@article {Farooq2023.12.04.570026,
+    author  = {Farooq, Usman and Dragoi, George},
+    title   = {Geometric experience sculpts the development and dynamics of hippocampal sequential cell assemblies},
+    elocation-id = {2023.12.04.570026},
+    year    = {2023},
+    URL     = {https://www.biorxiv.org/content/early/2023/12/06/2023.12.04.570026},
+    eprint  = {https://www.biorxiv.org/content/early/2023/12/06/2023.12.04.570026.full.pdf},
+    journal = {bioRxiv}
+}
+```
