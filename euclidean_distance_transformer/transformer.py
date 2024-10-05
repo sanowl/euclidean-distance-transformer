@@ -116,6 +116,9 @@ class Attention(Module):
 
         sim = neg_l2_dist_sq * self.scale
 
+        causal_mask = torch.ones(sim.shape[-2:], device = x.device, dtype = torch.bool).triu(1)
+        sim = sim.masked_fill(causal_mask, -torch.finfo(sim.dtype).max)
+
         attn = sim.softmax(dim = -1)
 
         out = einsum(attn, v, 'b i j, b j d -> b i d')
