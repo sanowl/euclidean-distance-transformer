@@ -92,13 +92,14 @@ class Attention(Module):
         dim,
         dim_head = 64,
         heads = 8,
+        l2_dist_proj_in = True,
         l2_dist_proj_out = True
     ):
         super().__init__()
         dim_inner = heads * dim_head
         self.scale = dim_head ** -0.5
 
-        self.to_qkv = L2DistanceLinear(dim, dim_inner * 3, squared = False)
+        self.to_qkv = L2DistanceLinear(dim, dim_inner * 3, squared = False) if l2_dist_proj_in else nn.Linear(dim, dim_inner * 3, bias = False)
 
         self.split_heads = Rearrange('b n (qkv h d) -> qkv (b h) n d', qkv = 3, h = heads)
         self.merge_heads = Rearrange('(b h) n d -> b n (h d)', h = heads)
@@ -157,6 +158,7 @@ class L2DistanceTransformer(Module):
         heads = 8,
         ff_mult = 4,
         has_norms = True,
+        attn_l2_dist_proj_in = False,
         attn_l2_dist_proj_out = False,
         ff_l2_dist_proj_out = False
     ):
@@ -174,6 +176,7 @@ class L2DistanceTransformer(Module):
                 dim = dim,
                 dim_head = dim_head,
                 heads = heads,
+                l2_dist_proj_in = attn_l2_dist_proj_in,
                 l2_dist_proj_out = attn_l2_dist_proj_out
             )
 
