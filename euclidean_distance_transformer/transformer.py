@@ -187,6 +187,8 @@ class L2DistanceTransformer(Module):
                 ff
             ]))
 
+        self.norm = RMSNorm(dim) if has_norms else nn.Identity()
+
     def forward(
         self,
         x
@@ -207,6 +209,8 @@ class L2DistanceTransformer(Module):
         for attn_norm, attn, ff_norm, ff in self.layers:
             x = attn(attn_norm(x)) + x
             x = ff(ff_norm(x)) + x
+
+        x = self.norm(x)
 
         # use l2 distance back to original token embedding space for logits
 
