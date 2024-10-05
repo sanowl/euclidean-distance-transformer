@@ -132,7 +132,7 @@ class FeedForward(Module):
     ):
         super().__init__()
         dim_inner = int(dim * mult)
-        self.proj_in = L2DistanceLinear(dim, dim_inner, negate = True)
+        self.proj_in = L2DistanceLinear(dim, dim_inner, negate = True, bias = True)
         self.proj_out = L2DistanceLinear(dim_inner, dim, squared = False) if l2_dist_proj_out else nn.Linear(dim_inner, dim, bias = False)
 
     def forward(self, x):
